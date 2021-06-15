@@ -1,3 +1,58 @@
+#define _PTWE
+
+#ifdef _PTWE
+
+#include"libOne.h"
+class ENEMY {
+protected:
+    int Img = 0;
+    float Px = 0, Py = 0, Vx = 0;
+public:
+    void setImage(int img) {
+        Img = img;
+    }
+
+    void init() {
+        Px = random() % (int)width;
+        Py = random() % (int)height;
+        Vx = random() % (int)5 + 1.0f;
+    }
+    virtual void move() {
+        Px += Vx;
+    }
+
+    void draw() {
+        image(Img, Px, Py);
+    }
+
+};
+void gmain() {
+    window(1920, 1080, full);
+    hideCursor();
+
+    int enemyImg = loadImage("assets\\enemy.png");
+
+    int num = 50;
+    ENEMY* enemy = new ENEMY[num];
+
+    for (int i = 0; i < num; i++) {
+        enemy[i].setImage(enemyImg);
+        enemy[i].init();
+    }
+
+    while (notQuit) {
+        clear();
+        for (int i = 0; i < num; i++) {
+            enemy[i].move();
+            enemy[i].draw();
+        }
+    }
+    delete[] enemy;
+}
+#endif
+
+#ifdef _PONE
+
 #include"libOne.h"
 
 class CHARACTER {
@@ -85,4 +140,5 @@ void gmain() {
         }
     }
 }
+#endif
 
